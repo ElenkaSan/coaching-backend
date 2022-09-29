@@ -55,7 +55,7 @@ cd into the "frontend" directory, install required packages, then start the app
 | /flights            | FlightDetail      |
 | /profile            | UserPage          |
 | /update             | ProfileForm       |
-| /mytrip             | User Trip Page    |
+| /weather            | WeatherPage       |
 
 ## Component Architecture
 ```sh
