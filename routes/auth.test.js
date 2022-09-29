@@ -83,6 +83,7 @@ describe("POST /auth/register", function () {
           lastName: "last",
           password: "password",
           email: "new@email.com",
+          node: "I have a vacation",
         });
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).toEqual({
@@ -108,6 +109,7 @@ describe("POST /auth/register", function () {
           lastName: "last",
           password: "password",
           email: "not-an-email",
+          node: "I have a vacation"
         });
     expect(resp.statusCode).toEqual(400);
   });
