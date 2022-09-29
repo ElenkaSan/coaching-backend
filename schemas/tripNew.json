@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.trip.com/tripNew.schema.json",
+    "type": "object",
+    "properties": {
+      "trip_name": {
+        "type": "string"
+      },
+      " trip_date": {
+        "type": "string"
+      },
+      " username": {
+        "type": "string"
+      },
+      "flightReservation_id": {
+        "type": "string"
+      },
+      "hotelReservation_id": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": []
+  }
