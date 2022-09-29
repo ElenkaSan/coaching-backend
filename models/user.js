@@ -17,7 +17,7 @@ const { use } = require("passport");
 class User {
   /** authenticate user with username, password.
    *
-   * Returns { username, first_name, last_name, email, is_admin }
+   * Returns { username, first_name, last_name, email, is_admin, notes }
    *
    * Throws UnauthorizedError is user not found or wrong password.
    **/
@@ -53,7 +53,7 @@ class User {
 
   /** Register user with data.
    *
-   * Returns { username, firstName, lastName, email, isAdmin }
+   * Returns { username, firstName, lastName, email, isAdmin, notes }
    *
    * Throws BadRequestError on duplicates.
    **/
@@ -107,7 +107,7 @@ class User {
 
   /** Find all users.
    *
-   * Returns [{ username, first_name, last_name, email, is_admin }, ...]
+   * Returns [{ username, first_name, last_name, email, notes, is_admin }, ...]
    **/
 
   static async findAll() {
@@ -127,8 +127,7 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin, jobs }
-   *   where jobs is { id, title, company_handle, company_name, state }
+   * Returns { username, first_name, last_name, is_admin, notes }
    *
    * Throws NotFoundError if user not found.
    **/
@@ -149,21 +148,8 @@ class User {
     const user = userRes.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
-
-    // const userTripRes = await db.query(
-    //       `SELECT t.username
-    //        FROM trips AS t
-    //        WHERE t.username = $1`, [username]);
-    // user.trips = userTripRes.rows.map(t => t.username_id);
-
-    const userTripRes = await db.query(
-      `SELECT t.flightReservation_id AS "flightId", t.hotelReservation_id AS "hotelId"
-       FROM trips AS t
-       WHERE t.username = $1`, [username]);
-
-    user.trips = userTripRes.rows.map(t => t.flightReservation_id && t.hotelReservation_id);
+    
     return user;
-
   }
 
   /** Update user data with `data`.
@@ -172,9 +158,9 @@ class User {
    * all the fields; this only changes provided ones.
    *
    * Data can include:
-   *   { firstName, lastName, password, email, isAdmin, note }
+   *   { firstName, lastName, password, email, isAdmin, notes }
    *
-   * Returns { username, firstName, lastName, email, isAdmin, note }
+   * Returns { username, firstName, lastName, email, isAdmin, notes }
    *
    * Throws NotFoundError if not found.
    *
