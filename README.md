@@ -89,9 +89,11 @@ src
 │ └── UserContext
 │
 ├── TripPage
-│   ├── MyTrip
+│   ├── AddItemForm
 │   ├── CountDown
-│   └── FlightDetail 
+|   ├── DateInput
+│   ├── Item 
+|   └── PackingList
 │ 
 ├── Common
 │   ├── LoadingSpinner 
