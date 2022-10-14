@@ -19,7 +19,7 @@ cd into the "backend" directory, install required packages, create and seed data
   This will start the server on port 3001
   
 ### Data
-For this CP database that takes trip-related information from the [Priceline API](https://rapidapi.com/tipsters/api/priceline-com-provider/)
+For this CP database that takes trip-related information from the [Amadeus API](https://amadeus.com/)
 
 ```sh
 DB schema: 
@@ -131,6 +131,7 @@ Heroku
     - Save favorite flight / hotel results into thier User Account and Trip Page after signup
     - Automatically calculate the flights and hotel date to count down in account, analyze hotel and flight costs and create trip list
     - Book flight and hotel
+    - Car search, save and book
     - When you search for any destination in the world, you will get recommendations for nice venues and places to visit in the area and detailed information about those places including pictures and maps.
     - Create app on the phone
 
