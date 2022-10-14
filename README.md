@@ -30,7 +30,7 @@ DB schema:
   └── hotelReservations table
  ```
 
-<img width="1112" alt="Screen Shot 2022-09-13 at 10 41 47 PM" src="https://user-images.githubusercontent.com/75818489/190046636-681a9b5d-8626-465b-afbc-14ee0032dd5a.png">
+<img width="1142" alt="Screen Shot 2022-10-14 at 1 53 17 PM" src="https://user-images.githubusercontent.com/75818489/195910381-edb8331d-eb4d-4b8f-922b-6d662c73fb62.png">
 
 
 ## [Front-end](https://github.com/ElenkaSan/Capstone_Project_2_Frontend.git)
