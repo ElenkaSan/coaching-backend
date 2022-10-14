@@ -1,9 +1,9 @@
 # Vacation-Back
 # Capstone Project 2 - Vacation Time
-### *Try the app [Vacation Time](https://wiry-ground.surge.sh/)*
+### *Try the app [Vacation Time](https://jolly-discovery.surge.sh/)*
 Ready for travel, let’s make the trip of your dreams. This website `Vacation Time` allows you to find the nice hotel, flight for you with the best price. When your make next travel destination then can do a record personalized notes for vacation planning after create an account.
 You can conveniently save your results along with any notes you've made in your personalized list. Start count down your trip date and check the forecast.
-This website allows users to create an account and save the result after that with create a list of their favorites. 
+This website allows users to create an account and save the result after that with create a list of their Packing List and CountDown trip/flight/deadlines/evens and etc. 
 
 ## App Information
 ## Back-end
@@ -90,8 +90,10 @@ src
 │
 ├── TripPage
 │   ├── AddItemForm
-│   ├── CountDown
-|   ├── DateInput
+│   ├── CountDownTrip
+|   ├── EventCountdown
+|   ├── Forma
+|   ├── Timers
 │   ├── Item 
 |   └── PackingList
 │ 
@@ -113,7 +115,8 @@ src
 ### Functionality
 The app's functionality includes:
   - User can search flights / hotels for every place on Earth
-  - User can see CountDown thier trip and add Packing List after signup
+  - User can see CountDown thier trip (e.g. Flight time or other Events, Deadlines) and add Packing List after signup
+  - Search the Weather forecast in User page
   - User can record ideas and ruminations about the venue in your own personal note
 
 ### Technology Stack
