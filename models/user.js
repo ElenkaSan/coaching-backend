@@ -12,12 +12,14 @@ const {
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 const { use } = require("passport");
 
+const Trip = require("./trip");
+
 /** Related functions for users. */
 
 class User {
   /** authenticate user with username, password.
    *
-   * Returns { username, first_name, last_name, email, is_admin, notes }
+   * Returns { username, first_name, last_name, email, is_admin }
    *
    * Throws UnauthorizedError is user not found or wrong password.
    **/
@@ -29,8 +31,7 @@ class User {
                   password,
                   first_name AS "firstName",
                   last_name AS "lastName",
-                  email,
-                  notes,
+                  email
                   is_admin AS "isAdmin"    
            FROM users
            WHERE username = $1`,
@@ -53,13 +54,13 @@ class User {
 
   /** Register user with data.
    *
-   * Returns { username, firstName, lastName, email, isAdmin, notes }
+   * Returns { username, firstName, lastName, email, isAdmin }
    *
    * Throws BadRequestError on duplicates.
    **/
 
   static async register(
-      { username, password, firstName, lastName, email, notes, isAdmin }) {
+      { username, password, firstName, lastName, email, isAdmin }) {
     const duplicateCheck = await db.query(
           `SELECT username
            FROM users
@@ -80,14 +81,12 @@ class User {
             first_name,
             last_name,
             email,
-            notes,
             is_admin)
-           VALUES ($1, $2, $3, $4, $5, $6, $7)
+           VALUES ($1, $2, $3, $4, $5, $6)
            RETURNING username, 
                      first_name AS "firstName", 
                      last_name AS "lastName", 
                      email, 
-                     notes,
                      is_admin AS "isAdmin"`,
         [
           username,
@@ -95,7 +94,6 @@ class User {
           firstName,
           lastName,
           email,
-          notes,
           isAdmin,
         ],
     );
@@ -107,7 +105,7 @@ class User {
 
   /** Find all users.
    *
-   * Returns [{ username, first_name, last_name, email, notes, is_admin }, ...]
+   * Returns [{ username, first_name, last_name, email, is_admin }, ...]
    **/
 
   static async findAll() {
@@ -116,7 +114,6 @@ class User {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
-                  notes,
                   is_admin AS "isAdmin"
            FROM users
            ORDER BY username`,
@@ -127,7 +124,7 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin, notes }
+   * Returns { username, first_name, last_name, is_admin }
    *
    * Throws NotFoundError if user not found.
    **/
@@ -138,7 +135,6 @@ class User {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
-                  notes,
                   is_admin AS "isAdmin"
            FROM users
            WHERE username = $1`,
@@ -152,15 +148,18 @@ class User {
     return user;
   }
 
+  static async getTrips() {
+    return await Trip.getTripsForUser(username);
+  }
   /** Update user data with `data`.
    *
    * This is a "partial update" --- it's fine if data doesn't contain
    * all the fields; this only changes provided ones.
    *
    * Data can include:
-   *   { firstName, lastName, password, email, isAdmin, notes }
+   *   { firstName, lastName, password, email, isAdmin }
    *
-   * Returns { username, firstName, lastName, email, isAdmin, notes }
+   * Returns { username, firstName, lastName, email, isAdmin }
    *
    * Throws NotFoundError if not found.
    *
@@ -190,8 +189,7 @@ class User {
                                 first_name AS "firstName",
                                 last_name AS "lastName",
                                 email,
-                                is_admin AS "isAdmin",
-                                notes`
+                                is_admin AS "isAdmin"`
     const result = await db.query(querySql, [...values, username]);
     const user = result.rows[0];
 
@@ -215,8 +213,6 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
 
- 
-  
 }
 
 

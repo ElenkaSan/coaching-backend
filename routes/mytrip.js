@@ -21,12 +21,14 @@ const router = new express.Router();
 router.post("/", ensureAdmin, async function (req, res, next) {
     try {
     //CREATING and EMPTY TRIP for USER
-    const { username, flightReservation_id, hotelReservation_id } = req.body;
+    const { username, flightId, hotelId, countDown, items } = req.body;
     
     const newTrip = await Trip.create({
       username, 
-      flightReservation_id,
-      hotelReservation_id
+      flightId,
+      hotelId,
+      countDown,
+      items,
      });
    
     // const { dataValues } = newTrip;
@@ -43,6 +45,23 @@ router.post("/", ensureAdmin, async function (req, res, next) {
       return next(err);
     }
   });
+
+  // router.post("/", async function(req, res, next) {
+  //   try {
+  //     const username = req.body.username;
+  //     const flightId = req.body.flightId;
+  //     const hotelId = req.body.hotelId;
+  //     const countDown = req.body.countDown;
+  //     const items = req.body.items;
+  
+  //     const usern = await Trip.create({ username, flightId, hotelId, countDown, items });
+  //     await usern.save();
+  
+  //     return res.redirect(`/${usern.id}/`);
+  //   } catch (err) {
+  //     return next(err);
+  //   }
+  // });
 
 
   router.get("/", async function (req, res, next) {
@@ -66,7 +85,9 @@ router.post("/", ensureAdmin, async function (req, res, next) {
     } catch (err) {
       return next(err);
     }
+    
   });
+
 
 
   module.exports = router;

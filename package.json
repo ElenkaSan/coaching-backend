@@ -24,7 +24,7 @@
     "jsonschema": "^1.2.6",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.3.5",
+    "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.16",
     "passport": "^0.6.0",

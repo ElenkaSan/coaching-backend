@@ -5,7 +5,6 @@ CREATE TABLE users (
   last_name TEXT NOT NULL,
   email TEXT NOT NULL
     CHECK (position('@' IN email) > 1),
-  notes TEXT NOT NULL,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -39,6 +38,8 @@ CREATE TABLE trips (
   -- trip_date DATE NOT NULL,
   username VARCHAR(25)
     REFERENCES users ON DELETE CASCADE,
+  count_down INTEGER,
+  items TEXT,
   flightReservation_id INTEGER
     REFERENCES flightReservations ON DELETE CASCADE,
   hotelReservation_id INTEGER

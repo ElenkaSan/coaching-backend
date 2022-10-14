@@ -8,6 +8,7 @@ const express = require("express");
 const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
+const Trip = require("../models/trip");
 const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
 const userUpdateSchema = require("../schemas/userUpdate.json");
@@ -20,7 +21,7 @@ const router = express.Router();
  * admin.
  *
  * This returns the newly created user and an authentication token for them:
- *  {user: { username, firstName, lastName, email, isAdmin, notes }, token }
+ *  {user: { username, firstName, lastName, email, isAdmin }, token }
  *
  * Authorization required: admin
  **/
@@ -42,7 +43,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 });
 
 
-/** GET / => { users: [ {username, firstName, lastName, email, notes }, ... ] }
+/** GET / => { users: [ {username, firstName, lastName, email}, ... ] }
  *
  * Returns list of all users.
  *
@@ -61,7 +62,7 @@ router.get("/", ensureAdmin, async function (req, res, next) {
 
 /** GET /[username] => { user }
  *
- * Returns { username, firstName, lastName, isAdmin, notes }
+ * Returns { username, firstName, lastName, isAdmin }
  *
  * Authorization required: admin or same user-as-:username
  **/
@@ -75,13 +76,12 @@ router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, nex
   }
 });
 
-
 /** PATCH /[username] { user } => { user }
  *
  * Data can include:
  *   { firstName, lastName, password, email, nodes }
  *
- * Returns { username, firstName, lastName, email, isAdmin, notes }
+ * Returns { username, firstName, lastName, email, isAdmin }
  *
  * Authorization required: admin or same-user-as-:username
  **/
@@ -96,6 +96,38 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, n
 
     const user = await User.update(req.params.username, req.body);
     return res.json({ user });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post("/:username/add-items-countdown/", async function(req, res, next) {
+  try {
+    const usern = req.params.username;
+    const count = new Date(req.body.countDown);
+    const items = req.body.items;
+
+    const newTrip = Trip.create({
+      usern,
+      count,
+      items
+    });
+    // await reservation.save();
+    res.send(newTrip);
+    return res.redirect(`/${usern.username}/`);
+    // return res.status(201).json({ newTrip });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+router.get("/:username/getTrip", ensureCorrectUserOrAdmin, async function(req, res, next) {
+  try {
+    const usern = await User.get(req.params.username);
+    const saved = await usern.getTrips();
+    return res.json({ usern, saved });
+    // return res.render("user_detail.html", { usern, saved });
   } catch (err) {
     return next(err);
   }
