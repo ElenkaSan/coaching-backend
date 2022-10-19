@@ -1,8 +1,8 @@
 # Vacation-Back
 # Capstone Project 2 - Vacation Time
-### *Try the app [Vacation Time](https://jolly-discovery.surge.sh/)*
+### *Try the app [Vacation Time](https://elated-smile.surge.sh/)*
 Ready for travel, let’s make the trip of your dreams. This website `Vacation Time` allows you to find the nice hotel, flight for you with the best price. When your make next travel destination then can do a record personalized notes for vacation planning after create an account.
-You can conveniently save your results along with any notes you've made in your personalized list. Start count down your trip date and check the forecast.
+You can conveniently save your results along with any notes you've made in your personalized list. Start count down your trip date and check the Weather forecast.
 This website allows users to create an account and save the result after that with create a list of their Packing List and CountDown trip/flight/deadlines/evens and etc. 
 
 ## App Information
@@ -30,7 +30,7 @@ DB schema:
   └── hotelReservations table
  ```
 
-<img width="1142" alt="Screen Shot 2022-10-14 at 1 53 17 PM" src="https://user-images.githubusercontent.com/75818489/195910381-edb8331d-eb4d-4b8f-922b-6d662c73fb62.png">
+<img width="1142" alt="Screen Shot 2022-10-14 at 1 53 17 PM" src="https://user-images.githubusercontent.com/75818489/195910555-2d728b7e-5cd0-413f-bd87-2efe67cc0b8a.png">
 
 
 ## [Front-end](https://github.com/ElenkaSan/Capstone_Project_2_Frontend.git)
