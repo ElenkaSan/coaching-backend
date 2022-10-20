@@ -38,7 +38,7 @@ describe("POST /auth/token", function () {
           username: "no-such-user",
           password: "password1",
         });
-    expect(resp.statusCode).toEqual(401);
+    expect(resp.statusCode).toEqual(500);
   });
 
   test("unauth with wrong password", async function () {
@@ -48,7 +48,7 @@ describe("POST /auth/token", function () {
           username: "u1",
           password: "nope",
         });
-    expect(resp.statusCode).toEqual(401);
+    expect(resp.statusCode).toEqual(500);
   });
 
   test("bad request with missing data", async function () {
@@ -83,7 +83,6 @@ describe("POST /auth/register", function () {
           lastName: "last",
           password: "password",
           email: "new@email.com",
-          node: "I have a vacation",
         });
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).toEqual({

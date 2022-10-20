@@ -12,15 +12,11 @@ const {
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 const { use } = require("passport");
 
-const Trip = require("./trip");
-
 /** Related functions for users. */
 
 class User {
   /** authenticate user with username, password.
-   *
    * Returns { username, first_name, last_name, email, is_admin }
-   *
    * Throws UnauthorizedError is user not found or wrong password.
    **/
 
@@ -104,7 +100,6 @@ class User {
   }
 
   /** Find all users.
-   *
    * Returns [{ username, first_name, last_name, email, is_admin }, ...]
    **/
 
@@ -123,9 +118,13 @@ class User {
   }
 
   /** Given a username, return data about user.
-   *
-   * Returns { username, first_name, last_name, is_admin }
-   *
+   * Returns { username, first_name, last_name, is_admin, hotelReservations, flightReservations }
+   *   where hotelReservations is 
+   *      { id, hotelName, roomType, checkInDate, checkOutDate, numberOfGuests, roomsNumber, price, currency } 
+   * and
+   *   where flightReservations is 
+   *     { id, numberOfPassengers, location_departure, location_arrival, departureDate, returnDate, price, currency }
+   * 
    * Throws NotFoundError if user not found.
    **/
 
@@ -144,13 +143,23 @@ class User {
     const user = userRes.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
+
+    const userFlightTrip = await db.query(
+      `SELECT t.flightReservation_id 
+       FROM trips AS t
+       WHERE t.username = $1`, [username]);
+       user.trips = userFlightTrip.rows.map(a => a.flightReservation_id);
+
+    const userHotelTrip = await db.query(
+      `SELECT t.hotelReservation_id 
+       FROM trips AS t
+       WHERE t.username = $1`, [username]);
+       user.trips = userHotelTrip.rows.map(a => a.hotelReservation_id);
     
     return user;
   }
 
-  static async getTrips() {
-    return await Trip.getTripsForUser(username);
-  }
+
   /** Update user data with `data`.
    *
    * This is a "partial update" --- it's fine if data doesn't contain

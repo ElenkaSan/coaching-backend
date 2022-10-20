@@ -3,12 +3,10 @@
 /** Routes for users. */
 
 const jsonschema = require("jsonschema");
-
 const express = require("express");
 const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
-const Trip = require("../models/trip");
 const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
 const userUpdateSchema = require("../schemas/userUpdate.json");
@@ -44,9 +42,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 
 
 /** GET / => { users: [ {username, firstName, lastName, email}, ... ] }
- *
  * Returns list of all users.
- *
  * Authorization required: admin
  **/
 
@@ -61,9 +57,13 @@ router.get("/", ensureAdmin, async function (req, res, next) {
 
 
 /** GET /[username] => { user }
- *
- * Returns { username, firstName, lastName, isAdmin }
- *
+ * Returns { username, first_name, last_name, is_admin, hotelReservations, flightReservations }
+   *   where hotelReservations is 
+   *      { id, hotelName, roomType, checkInDate, checkOutDate, numberOfGuests, roomsNumber, price, currency } 
+   * and
+   *   where flightReservations is 
+   *     { id, numberOfPassengers, location_departure, location_arrival, departureDate, returnDate, price, currency }
+   * 
  * Authorization required: admin or same user-as-:username
  **/
 
@@ -77,7 +77,6 @@ router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, nex
 });
 
 /** PATCH /[username] { user } => { user }
- *
  * Data can include:
  *   { firstName, lastName, password, email, nodes }
  *
@@ -93,7 +92,6 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, n
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
-
     const user = await User.update(req.params.username, req.body);
     return res.json({ user });
   } catch (err) {
@@ -101,41 +99,7 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, n
   }
 });
 
-router.post("/:username/add-items-countdown/", async function(req, res, next) {
-  try {
-    const usern = req.params.username;
-    const count = new Date(req.body.countDown);
-    const items = req.body.items;
-
-    const newTrip = Trip.create({
-      usern,
-      count,
-      items
-    });
-    // await reservation.save();
-    res.send(newTrip);
-    return res.redirect(`/${usern.username}/`);
-    // return res.status(201).json({ newTrip });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-
-router.get("/:username/getTrip", ensureCorrectUserOrAdmin, async function(req, res, next) {
-  try {
-    const usern = await User.get(req.params.username);
-    const saved = await usern.getTrips();
-    return res.json({ usern, saved });
-    // return res.render("user_detail.html", { usern, saved });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-
 /** DELETE /[username]  =>  { deleted: username }
- *
  * Authorization required: admin or same-user-as-:username
  **/
 
