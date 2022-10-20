@@ -10,7 +10,7 @@ const {
 } = require("../expressError");
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
-const { use } = require("passport");
+// const { use } = require("passport");
 
 /** Related functions for users. */
 
@@ -20,14 +20,14 @@ class User {
    * Throws UnauthorizedError is user not found or wrong password.
    **/
 
-  static async authenticate(username, password) {
+   static async authenticate(username, password) {
     // try to find the user first
     const result = await db.query(
           `SELECT username,
                   password,
                   first_name AS "firstName",
                   last_name AS "lastName",
-                  email
+                  email,
                   is_admin AS "isAdmin"    
            FROM users
            WHERE username = $1`,
@@ -55,49 +55,47 @@ class User {
    * Throws BadRequestError on duplicates.
    **/
 
-  static async register(
-      { username, password, firstName, lastName, email, isAdmin }) {
-    const duplicateCheck = await db.query(
-          `SELECT username
-           FROM users
-           WHERE username = $1`,
-        [username],
-    );
+   static async register(
+    { username, password, firstName, lastName, email, notes, isAdmin }) {
+  const duplicateCheck = await db.query(
+        `SELECT username
+         FROM users
+         WHERE username = $1`,
+      [username],
+  );
 
-    if (duplicateCheck.rows[0]) {
-      throw new BadRequestError(`Duplicate username: ${username}`);
-    }
-
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-
-    const result = await db.query(
-          `INSERT INTO users
-           (username,
-            password,
-            first_name,
-            last_name,
-            email,
-            is_admin)
-           VALUES ($1, $2, $3, $4, $5, $6)
-           RETURNING username, 
-                     first_name AS "firstName", 
-                     last_name AS "lastName", 
-                     email, 
-                     is_admin AS "isAdmin"`,
-        [
-          username,
-          hashedPassword,
-          firstName,
-          lastName,
-          email,
-          isAdmin,
-        ],
-    );
-
-    const user = result.rows[0];
-
-    return user;
+  if (duplicateCheck.rows[0]) {
+    throw new BadRequestError(`Duplicate username: ${username}`);
   }
+
+  const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+
+  const result = await db.query(
+        `INSERT INTO users
+         (username,
+          password,
+          first_name,
+          last_name,
+          email,
+          is_admin)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING username, 
+                   first_name AS "firstName", 
+                   last_name AS "lastName", 
+                   email, 
+                   is_admin AS "isAdmin"`,
+      [
+        username,
+        hashedPassword,
+        firstName,
+        lastName,
+        email,
+        isAdmin,
+      ],
+  );
+  const user = result.rows[0];
+  return user;
+}
 
   /** Find all users.
    * Returns [{ username, first_name, last_name, email, is_admin }, ...]
@@ -144,17 +142,17 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const userFlightTrip = await db.query(
-      `SELECT t.flightReservation_id 
-       FROM trips AS t
-       WHERE t.username = $1`, [username]);
-       user.trips = userFlightTrip.rows.map(a => a.flightReservation_id);
+    // const userFlightTrip = await db.query(
+    //   `SELECT t.flightReservation_id 
+    //    FROM trips AS t
+    //    WHERE t.username = $1`, [username]);
+    //    user.trips = userFlightTrip.rows.map(a => a.flightReservation_id);
 
-    const userHotelTrip = await db.query(
-      `SELECT t.hotelReservation_id 
-       FROM trips AS t
-       WHERE t.username = $1`, [username]);
-       user.trips = userHotelTrip.rows.map(a => a.hotelReservation_id);
+    // const userHotelTrip = await db.query(
+    //   `SELECT t.hotelReservation_id 
+    //    FROM trips AS t
+    //    WHERE t.username = $1`, [username]);
+    //    user.trips = userHotelTrip.rows.map(a => a.hotelReservation_id);
     
     return user;
   }
