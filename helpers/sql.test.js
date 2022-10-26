@@ -13,7 +13,7 @@ describe("sqlForPartialUpdate", function () {
     });
   });
 
-  test("works: 2 items", function () {
+  test("works: two items", function () {
     const result = sqlForPartialUpdate(
         { f1: "v1", jsF2: "v2" },
         { jsF2: "f2" });
