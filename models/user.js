@@ -142,18 +142,6 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    // const userFlightTrip = await db.query(
-    //   `SELECT t.flightReservation_id 
-    //    FROM trips AS t
-    //    WHERE t.username = $1`, [username]);
-    //    user.trips = userFlightTrip.rows.map(a => a.flightReservation_id);
-
-    // const userHotelTrip = await db.query(
-    //   `SELECT t.hotelReservation_id 
-    //    FROM trips AS t
-    //    WHERE t.username = $1`, [username]);
-    //    user.trips = userHotelTrip.rows.map(a => a.hotelReservation_id);
-    
     return user;
   }
 

@@ -1,6 +1,6 @@
 "use strict";
 
-/** Express app for vacation-time */
+/** Express app for web-couch */
 
 const express = require("express");
 const cors = require("cors");
@@ -10,9 +10,7 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
-const hotelsRoutes = require("./routes/hotels");
-const flightsRoutes = require("./routes/flights");
-// const mytripRoutes = require("./routes/mytrip");
+// const hotelsRoutes = require("./routes/publications");
 
 const morgan = require("morgan");
 
