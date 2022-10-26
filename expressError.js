@@ -1,4 +1,4 @@
-/** ExpressError extends normal JS error so we can
+/** The ExpressError extends normal JS error so we can
  *  add a status when we make an instance of it.
  *
  *  The error-handling middleware will return this.
