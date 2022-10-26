@@ -3,9 +3,6 @@ const bcrypt = require("bcrypt");
 const db = require("../db.js");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 
-const testFlightIds = [];
-const testHotelIds = [];
-
 async function commonBeforeAll() {
 
   // noinspection SqlWithoutWhere
@@ -44,7 +41,5 @@ module.exports = {
   commonBeforeAll,
   commonBeforeEach,
   commonAfterEach,
-  commonAfterAll,
-  testFlightIds,
-  testHotelIds,
+  commonAfterAll
 };
