@@ -11,9 +11,7 @@ const {
   commonBeforeAll,
   commonBeforeEach,
   commonAfterEach,
-  commonAfterAll,
-  // testFlightIds,
-  // testHotelIds
+  commonAfterAll
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -141,9 +139,7 @@ describe("get", function () {
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
-      isAdmin: false,
-      // trips: [testFlightIds[0]],
-      // trips: [testHotelIds[0]],
+      isAdmin: false
     });
   });
 
