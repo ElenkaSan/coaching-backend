@@ -1,5 +1,5 @@
 "use strict";
-
+// coush DB
 const app = require("./app");
 const { PORT } = require("./config");
 
