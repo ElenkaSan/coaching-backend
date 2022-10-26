@@ -1,5 +1,5 @@
 "use strict";
-/** Database setup for vacation_time. */
+/** Database setup for couch. */
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");
 
