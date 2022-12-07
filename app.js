@@ -23,8 +23,8 @@ app.use(authenticateJWT);
 
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
-app.use("/flights", flightsRoutes);
-app.use("/hotels", hotelsRoutes);
+// app.use("/flights", flightsRoutes);
+// app.use("/hotels", hotelsRoutes);
 // app.use("/mytrip", mytripRoutes);
 
 // -------------------

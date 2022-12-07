@@ -1,4 +1,3 @@
-//Auth
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://example.com/userAuth.json",
