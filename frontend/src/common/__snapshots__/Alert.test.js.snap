@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot for error 1`] = `
+<DocumentFragment>
+  <div
+    class="alert alert-dismissible fade show alert-danger"
+    role="alert"
+  >
+    <p
+      class="mb-0 small"
+    >
+      It does not work!
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot for no errors 1`] = `
+<DocumentFragment>
+  <div
+    class="alert alert-dismissible fade show alert-danger"
+    role="alert"
+  >
+    <p
+      class="mb-0 small"
+    >
+      It works!
+    </p>
+  </div>
+</DocumentFragment>
+`;
