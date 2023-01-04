@@ -1,6 +1,6 @@
-# Web-Couch-Back
-# Project - Web-Couch-Back
-### *The app [Web-Couch-Bac] - (not yet)*
+# Web-Coach-Back
+# Project - Web-Coach-Back
+### *The app [Web-Coach-Bac] - (not yet)*
 
 ## App Information
 ## Back-end
