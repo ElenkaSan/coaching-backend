@@ -10,8 +10,8 @@ cd into the "backend" directory, install required packages, create and seed data
   ```sh
   cd backend  
   npm install  
-  createdb couch
-  psql < couch.sql  
+  createdb coach
+  psql < coach.sql  
   nodemon server.js or node server.js
   ```  
   
