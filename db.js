@@ -1,5 +1,5 @@
 "use strict";
-/** Database setup for couch. */
+/** Database setup for coach. */
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");
 
